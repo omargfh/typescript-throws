@@ -22,6 +22,9 @@ class Throws<T> {
         }
         return this.value;
     }
+    shouldThrow(): boolean {
+      return this.value instanceof Error;
+    }
     bind(fn: ((input: NonNullable<T>) => Throws<T>)) {
         const optionalValue = this.optional();
         if (optionalValue) {
