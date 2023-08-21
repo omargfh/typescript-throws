@@ -3,7 +3,7 @@ class Throws<T> {
     constructor(value: T | Error) {
         this.value = value
     }
-    static apply<T>(value: T | Error) {
+    static pure<T>(value: T | Error) {
         if (value instanceof Error) {
             return new Throws<any>(value); // T will take on value of return type
         }
@@ -23,14 +23,14 @@ class Throws<T> {
         return this.value;
     }
     shouldThrow(): boolean {
-      return this.value instanceof Error;
+        return this.value instanceof Error;
     }
     bind(fn: ((input: NonNullable<T>) => Throws<T>)) {
         const optionalValue = this.optional();
         if (optionalValue) {
             return fn(optionalValue as NonNullable<T>);
         } else {
-            return Throws.apply(this.value);
+            return Throws.pure(this.value);
         }
     }
     bindMany<T>(fn: (input: NonNullable<T>, ...args: any[]) => Throws<T>, ...args: any[]) {
@@ -41,7 +41,7 @@ class Throws<T> {
             }
         } else {
             return (...args: any[]) => {
-                return Throws.apply(this.value)
+                return Throws.pure(this.value)
             }
         }
     }
@@ -55,9 +55,9 @@ class DivideByZeroError extends Error {
 }
 function divide(a: number, b: number): Throws<number> {
     if (b === 0) {
-        return Throws.apply(new DivideByZeroError("Argument b is 0"));
+        return Throws.pure(new DivideByZeroError("Argument b is 0"));
     }
-    return Throws.apply(a / b);
+    return Throws.pure(a / b);
 }
 
 // Curried
