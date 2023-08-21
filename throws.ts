@@ -7,7 +7,7 @@ class Throws<T> {
         if (value instanceof Error) {
             return new Throws<any>(value); // T will take on value of return type
         }
-        return new Throws<T>(value);
+        return new Throws<any>(value);
     }
     unwrap(): T | Error {
         if (this.value instanceof Error) {
