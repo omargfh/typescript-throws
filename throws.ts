@@ -1,10 +1,3 @@
-/*   
- *   Omar Ibrahim
- *       github.com/omargfh
- *       www.omar-ibrahim.com
- *   University of Chicago
- * */
-
 class Throws<T> {
     private value: T | Error;
     constructor(value: T | Error) {
@@ -14,7 +7,7 @@ class Throws<T> {
         if (value instanceof Error) {
             return new Throws<any>(value); // T will take on value of return type
         }
-        return new Throws<any>(value); // T will take on value of return type. Use the constructor for predefined T.
+        return new Throws<T>(value);
     }
     unwrap(): T | Error {
         if (this.value instanceof Error) {
@@ -44,14 +37,13 @@ class Throws<T> {
                 return fn(optionalValue as unknown as NonNullable<T>, ...args)
             }
         } else {
-            return (...args: any[]) {
+            return (...args: any[]) => {
                 return Throws.apply(null)
             }
         }
     }
 }
 
-// Example
 class DivideByZeroError extends Error {
     constructor(message: string) {
         super(message);
@@ -65,23 +57,32 @@ function divide(a: number, b: number): Throws<number> {
     return Throws.apply(a / b);
 }
 
+// Curried
+function divBy(b: number) {
+    return (a: number) => divide(a, b)
+}
+
 // Object value
 console.log("Object values")
-console.log(divide(5, 4))    // Throws {value: 1.25}
-console.log(divide(3, 0))    // Throws {value: DivideByZeroError {...}}
+console.log(divide(5, 4))
+console.log(divide(3, 0))
 
 // Optional
 console.log("=============================")
 console.log("Optional Values")
-console.log(divide(5, 4).optional())             // 1.25
-console.log(divide(3, 0).optional())             // null
+console.log(divide(5, 4).optional())
+console.log(divide(3, 0).optional())
 
-// Chaining
-console.log(`Chained: ${divide(5,4).bindMany(divide)(4).optional()}`)          // Chained: 0.3125
-console.log(`Chained: ${divide(5,0).bindMany(divide)(4).optional()}`)          // Chained: null
+// Chaining (bind many)
+console.log(`Chained: ${divide(5,4).bindMany(divide)(4).optional()}`)
+console.log(`Chained: ${divide(5,0).bindMany(divide)(4).optional()}`)
+
+// Chaining (bind)
+console.log(`Bind Chain: ${divide(50,1).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`)
+console.log(`Bind Chain: ${divide(50,0).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`)
 
 // Unwrap
 console.log("=============================")
 console.log("Unwrap")
-console.log(divide(5, 4).unwrap()) // 1.24
-console.log(divide(3, 0).unwrap()) // Throws new exception: DivideByZero: Argument b is 0
+console.log(divide(5, 4).unwrap())
+console.log(divide(3, 0).unwrap()) // Will throw
