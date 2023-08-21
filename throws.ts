@@ -80,6 +80,7 @@ console.log(`Chained: ${divide(5,0).bindMany(divide)(4).optional()}`) // Chained
 // Chaining (bind)
 console.log(`Bind Chain: ${divide(50,1).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`) // Bind Chain: 25
 console.log(`Bind Chain: ${divide(50,0).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`) // Bind Chain: null
+console.log(`Bind Chain: ${divide(50,0).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5))/*.unwrap()*/}`) // DivideByZeroError: Argument b is 0 (when uncommented)
 
 // Unwrap
 console.log("=============================")
