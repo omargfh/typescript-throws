@@ -27,7 +27,7 @@ class Throws<T> {
         if (optionalValue) {
             return fn(optionalValue as NonNullable<T>);
         } else {
-            return Throws.apply(null);
+            return Throws.apply(this.value);
         }
     }
     bindMany<T>(fn: (input: NonNullable<T>, ...args: any[]) => Throws<T>, ...args: any[]) {
@@ -38,7 +38,7 @@ class Throws<T> {
             }
         } else {
             return (...args: any[]) => {
-                return Throws.apply(null)
+                return Throws.apply(this.value)
             }
         }
     }
