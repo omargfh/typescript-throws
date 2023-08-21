@@ -23,7 +23,7 @@ class Throws<T> {
             return this.value;
         }
     }
-    optional(): T | Error | null {
+    optional(): T | null {
         if (this.value instanceof Error) {
             return null
         }
@@ -62,7 +62,7 @@ function divide(a: number, b: number): Throws<number> {
     if (b === 0) {
         return Throws.apply(new DivideByZeroError("Argument b is 0"));
     }
-    return Throws.apply<number>(a / b);
+    return Throws.apply(a / b);
 }
 
 // Object value
