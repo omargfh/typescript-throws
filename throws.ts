@@ -64,25 +64,25 @@ function divBy(b: number) {
 
 // Object value
 console.log("Object values")
-console.log(divide(5, 4))
-console.log(divide(3, 0))
+console.log(divide(5, 4)) //  Throws: { "value": 1.25 }
+console.log(divide(3, 0)) //  Throws: { "value": { "name" : ... } } 
 
 // Optional
 console.log("=============================")
 console.log("Optional Values")
-console.log(divide(5, 4).optional())
-console.log(divide(3, 0).optional())
+console.log(divide(5, 4).optional()) // 1.25
+console.log(divide(3, 0).optional()) // null
 
 // Chaining (bind many)
-console.log(`Chained: ${divide(5,4).bindMany(divide)(4).optional()}`)
-console.log(`Chained: ${divide(5,0).bindMany(divide)(4).optional()}`)
+console.log(`Chained: ${divide(5,4).bindMany(divide)(4).optional()}`)  // Chained: 0.3125
+console.log(`Chained: ${divide(5,0).bindMany(divide)(4).optional()}`) // Chained: null
 
 // Chaining (bind)
-console.log(`Bind Chain: ${divide(50,1).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`)
-console.log(`Bind Chain: ${divide(50,0).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`)
+console.log(`Bind Chain: ${divide(50,1).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`) // Bind Chain: 25
+console.log(`Bind Chain: ${divide(50,0).bind(divBy(2)).bind(divBy(2)).bind(divBy(.5)).optional()}`) // Bind Chain: null
 
 // Unwrap
 console.log("=============================")
 console.log("Unwrap")
-console.log(divide(5, 4).unwrap())
-console.log(divide(3, 0).unwrap()) // Will throw
+console.log(divide(5, 4).unwrap()) // 1.25
+console.log(divide(3, 0).unwrap()) // DivideByZeroError: Argument b is 0
