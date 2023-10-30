@@ -1,0 +1,41 @@
+{
+  "name": "typescript-throws",
+  "version": "1.0.0",
+  "description": "Optional datatype for Typescript",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "run": "ts-node index.ts",
+    "release": "tsc && tsc-alias && c8 ava  && npm publish",
+    "test": "tsc && tsc-alias && ava",
+    "coverage": "tsc && tsc-alias && c8 ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omargfh/typescript-throws.git"
+  },
+  "type": "module",
+  "keywords": [
+    "throw",
+    "optional",
+    "result",
+    "monad",
+    "maybe",
+    "exception",
+    "handling"
+  ],
+  "author": "Omar Ibrahim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/omargfh/typescript-throws/issues"
+  },
+  "homepage": "https://github.com/omargfh/typescript-throws#readme",
+  "devDependencies": {
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.8",
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2"
+  }
+}
